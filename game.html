@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>口算练习</title>
+        <link rel="stylesheet" href="gameboard.css">
+        <script src="question.js"></script>
+        <script src="score.js"></script>
+    </head>
+
+    <body onload = "next();">
+        <br>
+        <div id="frame">
+            <div id="score"></div>
+            <div class="bar" id="bar"></div>
+        </div>
+        <br><br>
+        <div id="question"></div>
+        <br><br>
+        <input id="answer" type="integers" onkeypress="if (event.keyCode == 13) check();">
+    </body>
+
+    <script>
+        var score = 0;
+        var target = 10000;
+        var question;
+        function clear() {
+            document.getElementById("answer").value = "";
+        }
+        function next() {
+            clear();
+            switch (Question.rndbetween(1, 6)) {
+                case 1:
+                    question = Question.generate('add', 10, 99, 10, 99);
+                    break;
+                case 2:
+                    question = Question.generate('sub', 10, 99, 10, 99);
+                    break;
+                case 3:
+                    question = Question.generate('mul', 2, 9, 2, 9);
+                    break;
+                case 4:
+                    question = Question.generate('div', 2, 9, 2, 9);
+                    break;
+                case 5:
+                    question = Question.generate('pow', 1, 23);
+                    break;
+                case 6:
+                    question = Question.generate('sqr', 1, 23);
+                    break;
+            }
+            document.getElementById('question').innerText = question.text;
+        }
+        function check() {
+            var answer = document.getElementById("answer").value;
+            if (answer == question.answer) {
+                score += question.score;
+                document.getElementById("score").innerText = `${score}/${target}`;
+                document.getElementById("bar").style.width = `${score/target*100}%`;
+                next();
+            } else {
+                clear();
+            }
+        }
+    </script>
+</html>
