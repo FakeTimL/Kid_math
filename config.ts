@@ -63,6 +63,7 @@ function save(): void {
     bot.shuffle();
     document.getElementById('config')!.style.visibility = 'hidden';
     document.getElementById("progress")!.innerText = '';
+    document.getElementById("timestamp")!.innerText = `开始时间: ${new Date().toLocaleString()}`;
     start(score);
     load();
 }

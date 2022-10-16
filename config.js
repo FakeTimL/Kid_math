@@ -63,6 +63,7 @@ function save() {
     bot.shuffle();
     document.getElementById('config').style.visibility = 'hidden';
     document.getElementById("progress").innerText = '';
+    document.getElementById("timestamp").innerText = "\u5F00\u59CB\u65F6\u95F4: ".concat(new Date().toLocaleString());
     start(score);
     load();
 }
