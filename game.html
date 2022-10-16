@@ -1,67 +1,44 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>口算练习</title>
-        <link rel="stylesheet" href="gameboard.css">
-        <script src="question.js"></script>
-        <script src="score.js"></script>
-    </head>
 
-    <body onload = "next();">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>口算练习</title>
+    <link rel="stylesheet" href="gameboard.css">
+    <script src="config.js"></script>
+    <script src="question.js"></script>
+    <script src="score.js"></script>
+    <script src="game.js"></script>
+</head>
+
+<body onload="init();">
+    <div id="game">
         <br>
         <div id="frame">
-            <div id="score"></div>
+            <div id="progress"></div>
             <div class="bar" id="bar"></div>
         </div>
         <br><br>
         <div id="question"></div>
         <br><br>
         <input id="answer" type="integers" onkeypress="if (event.keyCode == 13) check();">
-    </body>
+        <div id="score"></div>
+    </div>
+    <button onclick="document.getElementById('config').style.visibility = 'visible';">设置</button>
+    <div id="config" style="visibility:hidden;">
+        <button onclick="addOption();">添加</button>
+        <button onclick="save();">保存</button>
+    </div>
+</body>
 
-    <script>
-        var score = 0;
-        var target = 10000;
-        var question;
-        function clear() {
-            document.getElementById("answer").value = "";
-        }
-        function next() {
-            clear();
-            switch (Question.rndbetween(1, 6)) {
-                case 1:
-                    question = Question.generate('add', 10, 99, 10, 99);
-                    break;
-                case 2:
-                    question = Question.generate('sub', 10, 99, 10, 99);
-                    break;
-                case 3:
-                    question = Question.generate('mul', 2, 9, 2, 9);
-                    break;
-                case 4:
-                    question = Question.generate('div', 2, 9, 2, 9);
-                    break;
-                case 5:
-                    question = Question.generate('pow', 1, 23);
-                    break;
-                case 6:
-                    question = Question.generate('sqr', 1, 23);
-                    break;
-            }
-            document.getElementById('question').innerText = question.text;
-        }
-        function check() {
-            var answer = document.getElementById("answer").value;
-            if (answer == question.answer) {
-                score += question.score;
-                document.getElementById("score").innerText = `${score}/${target}`;
-                document.getElementById("bar").style.width = `${score/target*100}%`;
-                next();
-            } else {
-                clear();
-            }
-        }
-    </script>
+<script>
+    function check() {
+        submit(document.getElementById("answer").value);
+        document.getElementById("progress").innerText = `${score}/${target}`;
+        document.getElementById("bar").style.width = `${score / target * 100}%`;
+        load();
+    }
+</script>
+
 </html>

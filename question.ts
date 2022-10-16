@@ -24,3 +24,28 @@ class Question {
         }
     }
 }
+
+// class QuestionType {
+//     constructor(public type: string, public n1_min: number, public n1_max: number, public n2_min: number = 0, public n2_max: number = 0) {}
+//     next(): Question {
+//         return Question.generate(this.type, this.n1_min, this.n1_max, this.n2_min, this.n2_max);
+//     }
+// }
+
+class QuestionBot {
+    // list: QuestionType[] = [];
+    status: boolean = true;
+    contents: Question[] = [];
+    shuffle() {
+        for (let i = this.contents.length - 1; i > 0; i--) {
+            const j = ~~(Math.random() * (i + 1));
+            [this.contents[i], this.contents[j]] = [this.contents[j], this.contents[i]];
+        }
+    }
+    next(): Question {
+        this.status = true;
+        if (this.contents.length > 0) return this.contents.pop()!;
+        return new Question("", "", 0);
+        // return this.list[~~(Math.random() * this.list.length)].next();
+    }
+}
